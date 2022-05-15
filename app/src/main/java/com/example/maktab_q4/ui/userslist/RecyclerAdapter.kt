@@ -12,7 +12,7 @@ class RecyclerAdapter(private val items: List<UserResponse>) : RecyclerView.Adap
     class MyViewHolder(private var binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(username: String) {
-            binding.tvUsername.text = username
+            binding.tvFirstName.text = username
         }
     }
 

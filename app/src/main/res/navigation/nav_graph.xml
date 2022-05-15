@@ -7,5 +7,31 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.example.maktab_q4.ui.userslist.UserListFragment"
-        android:label="UserListFragment" />
+        android:label="UserListFragment" >
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+        <action
+            android:id="@+id/action_userListFragment_to_createUser"
+            app:destination="@id/createUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.example.maktab_q4.ui.userdetails.UserDetailsFragment"
+        android:label="UserDetailsFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createUser"
+        android:name="com.example.maktab_q4.ui.createuser.CreateUserFragment"
+        android:label="CreateUser" >
+        <action
+            android:id="@+id/action_createUser_to_userListFragment"
+            app:destination="@id/userListFragment" />
+    </fragment>
 </navigation>

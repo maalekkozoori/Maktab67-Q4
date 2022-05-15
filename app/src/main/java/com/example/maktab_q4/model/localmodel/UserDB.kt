@@ -5,17 +5,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "user")
-data class User (
-    @PrimaryKey
+data class UserDB (
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: String,
-
-    @ColumnInfo(name = "first_name")
+    val id : Int = 0,
+    val _id: String ,
     val firstName: String,
-
-    @ColumnInfo(name = "last_name")
+    //val hobbies: List<String>,
+    val image: String?,
     val lastName: String,
-
-    @ColumnInfo(name = "national_code")
-    val nationalCode: String,
+    val nationalCode: String
 )

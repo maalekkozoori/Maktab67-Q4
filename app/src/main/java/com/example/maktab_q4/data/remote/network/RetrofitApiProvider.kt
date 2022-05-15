@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+/*
 
 object RetrofitApiProvider {
     private val interceptor = Interceptor { chain ->
@@ -24,10 +25,10 @@ object RetrofitApiProvider {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://papp.ir/api/v1/")
+        .baseUrl("http://51.195.19.222:3000/api/v1/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
 
     val userApi = retrofit.create(UserApi::class.java)
-}
+}*/

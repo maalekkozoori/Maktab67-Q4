@@ -1,15 +1,24 @@
 package ir.mohsenafshar.apps.mkbarchitecture.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.maktab_q4.model.localmodel.User
-import ir.mohsenafshar.apps.mkbarchitecture.data.remote.model.UserResponse
-import java.util.concurrent.ExecutorService
 
-class   UserRepository(
-    private val executorService: ExecutorService,
-    private val remoteDataSource: DataSource,
-    private val localDataSource: DataSource
+import com.example.maktab_q4.data.local.LocalDataSource
+import com.example.maktab_q4.data.remote.network.RemoteDataSource
+import com.example.maktab_q4.di.IoDispatcher
+import com.example.maktab_q4.model.localmodel.UserDB
+import com.example.maktab_q4.model.networkmodel.UserRespons
+import com.example.maktab_q4.utility.safeApiCall
+import ir.mohsenafshar.apps.mkbarchitecture.data.remote.model.UserReqBody
+import kotlinx.coroutines.CoroutineDispatcher
+import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class   UserRepository @Inject constructor(
+    @IoDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ) {
 
     companion object {
@@ -18,23 +27,22 @@ class   UserRepository(
 
 
 
-    fun saveUserList(userList: List<User>) {
-        executorService.submit {
-            localDataSource.saveUserList(userList)
-        }
 
+
+    suspend fun  getUserListFlow() = safeApiCall(dispatcher){
+        remoteDataSource.getUserListFlow()
     }
 
-    fun getUserList(): LiveData<List<User>> {
-        val liveData = MutableLiveData<List<User>>()
+    suspend fun getUser(id:String): Response<UserRespons>{
+        return remoteDataSource.getUser(id)
+    }
 
-        executorService.submit {
-            val remoteData: List<User> = remoteDataSource.getUserList()
-            localDataSource.saveUserList(remoteData)
-            liveData.postValue(remoteData)
-        }
+    suspend fun createUser(userReqBody: UserReqBody):Response<String>{
+        return remoteDataSource.createUser(userReqBody)
+    }
 
-        return liveData
+    suspend fun addUserToDataBase(userDB: UserDB){
+        localDataSource.addUserToDataBase(userDB)
     }
 
 
