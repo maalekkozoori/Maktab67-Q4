@@ -4,7 +4,6 @@ package com.example.maktab_q4.data.remote.network
 import com.example.maktab_q4.model.networkmodel.UserRespons
 import ir.mohsenafshar.apps.mkbarchitecture.data.remote.model.UserReqBody
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 

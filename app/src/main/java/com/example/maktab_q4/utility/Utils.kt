@@ -1,5 +1,6 @@
 package com.example.maktab_q4.utility
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.example.maktab_q4.model.localmodel.UserDB
 import com.example.maktab_q4.model.networkmodel.UserError
@@ -10,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import javax.net.ssl.SSLException
 
@@ -66,4 +68,12 @@ fun convertUserResponsToUserDB(userRespons: UserRespons): UserDB {
         image = userRespons.image,
         nationalCode = userRespons.nationalCode
     )
+}
+
+
+fun Bitmap.toByteArray():ByteArray{
+    ByteArrayOutputStream().apply {
+        compress(Bitmap.CompressFormat.JPEG,10,this)
+        return toByteArray()
+    }
 }

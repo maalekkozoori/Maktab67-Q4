@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_userListFragment_to_createUser"
             app:destination="@id/createUser" />
+        <action
+            android:id="@+id/action_userListFragment_to_userListFromDB"
+            app:destination="@id/userListFromDB" />
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"
@@ -33,5 +36,27 @@
         <action
             android:id="@+id/action_createUser_to_userListFragment"
             app:destination="@id/userListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userListFromDB"
+        android:name="com.example.maktab_q4.ui.userlistfromdatabase.UserListFromDB"
+        android:label="UserListFromDB" >
+        <action
+            android:id="@+id/action_userListFromDB_to_DBUserDetailsFragment"
+            app:destination="@id/DBUserDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DBUserDetailsFragment"
+        android:name="com.example.maktab_q4.ui.userdetails.DBUserDetailsFragment"
+        android:label="DBUserDetailsFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_DBUserDetailsFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
+        <action
+            android:id="@+id/action_DBUserDetailsFragment_to_userListFromDB"
+            app:destination="@id/userListFromDB" />
     </fragment>
 </navigation>

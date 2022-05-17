@@ -4,6 +4,7 @@ package com.example.maktab_q4.data.remote.network
 
 import com.example.maktab_q4.model.networkmodel.UserRespons
 import ir.mohsenafshar.apps.mkbarchitecture.data.remote.model.UserReqBody
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,6 +23,8 @@ class RemoteDataSource @Inject constructor(private val apiService: UserApi) {
     suspend fun createUser(userReqBody: UserReqBody):Response<String>{
         return apiService.createUser(userReqBody)
     }
+
+    suspend fun uploadImage(id: String,image: MultipartBody.Part):Response<String> = apiService.uploadImage(id, image)
 
 
 }

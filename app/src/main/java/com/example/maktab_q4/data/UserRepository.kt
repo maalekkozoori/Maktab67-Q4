@@ -5,10 +5,10 @@ import com.example.maktab_q4.data.local.LocalDataSource
 import com.example.maktab_q4.data.remote.network.RemoteDataSource
 import com.example.maktab_q4.di.IoDispatcher
 import com.example.maktab_q4.model.localmodel.UserDB
-import com.example.maktab_q4.model.networkmodel.UserRespons
 import com.example.maktab_q4.utility.safeApiCall
 import ir.mohsenafshar.apps.mkbarchitecture.data.remote.model.UserReqBody
 import kotlinx.coroutines.CoroutineDispatcher
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +33,7 @@ class   UserRepository @Inject constructor(
         remoteDataSource.getUserListFlow()
     }
 
-    suspend fun getUser(id:String): Response<UserRespons>{
+    suspend fun getUser(id:String): Response<com.example.maktab_q4.model.networkmodel.UserRespons>{
         return remoteDataSource.getUser(id)
     }
 
@@ -45,6 +45,12 @@ class   UserRepository @Inject constructor(
         localDataSource.addUserToDataBase(userDB)
     }
 
+
+    fun getDBUserList() = localDataSource.getDBUserList()
+
+    suspend fun getUserDetails(userId:String) = localDataSource.getUserDetails(userId)
+
+    suspend fun uploadImage(id:String,image: MultipartBody.Part):Response<String> = remoteDataSource.uploadImage(id,image)
 
 
 }

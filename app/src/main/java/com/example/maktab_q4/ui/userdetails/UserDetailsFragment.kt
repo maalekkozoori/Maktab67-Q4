@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +22,10 @@ import com.example.maktab_q4.R
 import com.example.maktab_q4.databinding.FragmentUserdetailsBinding
 import com.example.maktab_q4.databinding.FragmentUserlistBinding
 import com.example.maktab_q4.ui.userslist.UserViewModel
+import com.example.maktab_q4.utility.toByteArray
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType
+import okhttp3.MultipartBody
 
 @AndroidEntryPoint
 class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
@@ -44,7 +48,10 @@ class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
             ActivityResultCallback {
                 imageByteArray = it!!
                 Log.d("TAG", imageByteArray.toString())
-                binding.imageView.setImageURI(it)
+                Glide.with(this)
+                    .load(it)
+                    .placeholder(R.drawable.ic_baseline_person_pin_24)
+                    .into(binding.imageView)
 
             })
 
@@ -55,6 +62,16 @@ class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
                 }
             }
 
+        viewModel.imageUrl.observe(viewLifecycleOwner) {
+         /*   Toast.makeText(requireContext(), "Image Uploaded!", Toast.LENGTH_SHORT).show()
+            Glide.with(view.context)
+                .load(it)
+                .placeholder(R.drawable.ic_baseline_person_pin_24)
+                .into(binding.imageView)
+
+            */
+        }
+
 
         with(binding){
             viewModel.user.observe(viewLifecycleOwner, Observer {
@@ -63,6 +80,7 @@ class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
                 tvNationalCode.text = it.nationalCode
                 Glide.with(this@UserDetailsFragment)
                     .load(it.image)
+                    .placeholder(R.drawable.ic_baseline_person_pin_24)
                     .into(imageView)
 
             })
@@ -79,15 +97,24 @@ class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
             btnCancel.setOnClickListener {
                 findNavController().navigate(R.id.action_userDetailsFragment_to_userListFragment)
             }
+
+            btnApply.setOnClickListener {
+                val convertToByteArray=context?.contentResolver?.openInputStream(imageByteArray)?.readBytes()
+                convertToByteArray?.let { byteArray ->
+                     uploadImage(byteArray)
+                }
+            }
+            val b = imageView.background.toBitmap()
         }
 
 
+    }
 
+    fun uploadImage(image: ByteArray){
+        val body= MultipartBody.create(MediaType.parse("image/*"),image)
+        val request = MultipartBody.Part.createFormData("image","${args.userId}.jpg",body)
 
-
-
-
-
+        viewModel.uploadImage(args.userId,request)
 
     }
 
@@ -100,7 +127,12 @@ class UserDetailsFragment:Fragment(R.layout.fragment_userdetails) {
 
     private fun cameraImage(intent: Intent?) {
         val bitmap = intent?.extras?.get("data") as Bitmap
-        binding.imageView.setImageBitmap(bitmap)
+        val b = bitmap.toByteArray()
+        view?.let { Glide.with(it.context)
+            .load(bitmap)
+            .placeholder(R.drawable.ic_baseline_person_pin_24)
+            .into(binding.imageView)
+        }
     }
 
 

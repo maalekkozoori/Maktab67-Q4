@@ -45,13 +45,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLastName" />
 
     <Button
-        android:id="@+id/btnApply"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Cancel"
         android:backgroundTint="@android:color/holo_red_dark"
-        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintEnd_toStartOf="@+id/btnApply"
         app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNationalCode" />
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnApply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

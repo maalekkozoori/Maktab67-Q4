@@ -3,6 +3,7 @@ package com.example.maktab_q4
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.maktab_q4.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+        val navController = findNavController(R.id.mainContainer)
+        binding.bottomNavigationView.setupWithNavController(navController)
 
     }
 }
